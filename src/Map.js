@@ -2,12 +2,17 @@
 import React, { Component } from 'react';
 // import GoogleMapReact from 'google-map-react';
 import styled, { css } from 'styled-components';
-import star from './star.svg';
+import star1 from './star.1.svg';
+import star2 from './star.2.svg';
+import star3 from './star.3.svg';
+import star4 from './star.4.svg';
+import star5 from './star.5.svg';
 // import maps from '@google/maps';
 // AIzaSyAJCEz1nAAFqcZ2N2gAMdioCfEyIQNkEQU
 // var googleMapsClient = maps.createClient({
 //    key: 'AIzaSyAJCEz1nAAFqcZ2N2gAMdioCfEyIQNkEQU'
 //  });
+const stars = [star1, star2, star3, star4, star5];
 
 const Button = styled.div`
    padding: 20px;
@@ -32,12 +37,16 @@ function getPlaces(location, map) {
    function callback(results, status) {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
          for (var i = 0; i < results.length; i++) {
-            const { geometry: { location } } = results[i];
-            
-            new google.maps.Marker({
+            const { geometry: { location }, rating } = results[i];
+            console.log(results[i]);
+            const marker = new google.maps.Marker({
                position: location,
-               icon: star,
+               icon: stars[Math.round(rating)-1],
                map: map,
+            });
+
+            marker.addListener('mouseover', function() {
+               console.log(marker);
             });
          }
       }
@@ -94,11 +103,11 @@ class App extends Component {
                   lng: position.coords.longitude
                };
 
-               new google.maps.Marker({
-                  position: pos,
-                  icon: star,
-                  map: map,
-               });
+               // new google.maps.Marker({
+               //    position: pos,
+               //    icon: star1,
+               //    map: map,
+               // });
 
                getPlaces(pos, map);
                console.log(map);

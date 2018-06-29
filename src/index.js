@@ -5,5 +5,5 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 styles();
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App google={window.google} />, document.getElementById('root'));
 registerServiceWorker();
